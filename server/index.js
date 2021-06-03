@@ -28,10 +28,23 @@ app.use('*', (req, res, next) => {
 // requested by index.html
 app.get('/bundle.js', (req, res) => {
   // if the browser accepts brotli-compressed files, send them
-  res.sendFile(join(__dirname, '../', 'dist', 'bundle.js'));
+  if (req.header('Accept-Encoding').includes('br')) {
+    console.log('using brotli');
+    res.set('Content-Encoding', 'br');
+    res.set('Content-Type', 'application/javascript');
+    res.sendFile(join(__dirname, '../', 'dist', 'bundle.js.br'));
+  } else if (req.header('Accept-Encoding').includes('gz')) {
+    console.log('using gzip');
+    res.set('Content-Encoding', 'gzip');
+    res.set('Content-Type', 'application/javascript');
+    res.sendFile(join(__dirname, '../', 'dist', 'bundle.js.gz'));
+  } else {
+    console.log('using uncompressed file');
+    res.sendFile(join(__dirname, '../', 'dist', 'bundle.js'));
+  }
 });
 
-app.use('/', (req, res) => {
+app.use((req, res) => {
   res.sendFile(join(__dirname, '../', 'dist', 'index.html'));
 });
 

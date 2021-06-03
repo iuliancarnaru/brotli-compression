@@ -1,12 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-
-function App(props) {
-  return (
-    <div>
-      <p>Setup complete 3</p>
-    </div>
-  );
-}
+import App from './components/App';
 
 render(<App />, document.getElementById('root'));
