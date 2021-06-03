@@ -1,6 +1,7 @@
 const path = require('path');
 const zlib = require('zlib');
 const CompressionPlugin = require('compression-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
@@ -26,13 +27,17 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          // fallback to style-loader in development
+          process.env.NODE_ENV !== 'production'
+            ? 'style-loader'
+            : MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
               sourceMap: true,
             },
           },
+          'resolve-url-loader',
           {
             loader: 'sass-loader',
             options: {
@@ -63,8 +68,17 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
     }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[path].css',
+      chunkFilename: '[path].css',
+    }),
   ],
   devtool: 'eval-source-map',
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.scss'],
+  },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
