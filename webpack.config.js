@@ -29,17 +29,17 @@ module.exports = {
         use: [
           // fallback to style-loader in development
           process.env.NODE_ENV !== 'production'
-            ? 'style-loader'
+            ? 'style-loader' // Inject styles into the DOM
             : MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: 'css-loader', // Turns css into commonjs
             options: {
               sourceMap: true,
             },
           },
           'resolve-url-loader',
           {
-            loader: 'sass-loader',
+            loader: 'sass-loader', // Turns sass into css
             options: {
               sourceMap: true,
             },
