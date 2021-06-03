@@ -1,8 +1,5 @@
 const path = require('path');
-const zlib = require('zlib');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
@@ -24,9 +21,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           // fallback to style-loader in development
-          process.env.NODE_ENV !== 'production'
-            ? 'style-loader' // Inject styles into the DOM
-            : MiniCssExtractPlugin.loader,
+          'style-loader', // Inject styles into the DOM
           {
             loader: 'css-loader', // Turns css into commonjs
             options: {
@@ -48,17 +43,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/src/template.html',
     }),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: '[path].css',
-      chunkFilename: '[path].css',
-    }),
   ],
   devtool: 'eval-source-map',
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss'],
-  },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,

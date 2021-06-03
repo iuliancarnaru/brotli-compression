@@ -1,8 +1,8 @@
 const path = require('path');
+const zlib = require('zlib');
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common');
-
 const CompressionPlugin = require('compression-webpack-plugin');
+const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'production',
