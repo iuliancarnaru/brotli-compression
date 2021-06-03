@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
   output: {
+    clean: true, // clean the folder before creating new output
     assetModuleFilename: 'images/[hash][ext][query]',
   },
   module: {
