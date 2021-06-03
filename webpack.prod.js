@@ -8,7 +8,7 @@ module.exports = merge(common, {
   mode: 'production',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].[contenthash].js', // Cache Busting with [contentHash]
+    filename: 'bundle.[contenthash].js', // Cache Busting with [contentHash]
     clean: true, // clean the folder before creating new output
   },
   plugins: [

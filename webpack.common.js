@@ -1,10 +1,22 @@
 const path = require('path');
+const svgToMiniDataURI = require('mini-svg-data-uri');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
+  output: {
+    assetModuleFilename: 'images/[hash][ext][query]',
+  },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
+      },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
@@ -36,6 +48,20 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.svg/,
+        type: 'asset/inline',
+        generator: {
+          dataUrl: (content) => {
+            content = content.toString();
+            return svgToMiniDataURI(content);
+          },
+        },
       },
     ],
   },
