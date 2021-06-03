@@ -37,4 +37,5 @@ module.exports = {
   },
   plugins: [],
   devtool: 'eval-source-map',
+  watch: true,
 };

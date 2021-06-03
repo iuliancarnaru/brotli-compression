@@ -1,6 +1,6 @@
 const express = require('express');
 const { join } = require('path');
-const port = 3001;
+const port = 3000;
 
 const app = express();
 
@@ -10,6 +10,8 @@ app.use(
     extended: true,
   })
 );
+
+app.use(express.static('public'));
 
 app.use('*', (req, res, next) => {
   //logger
@@ -24,15 +26,13 @@ app.use('*', (req, res, next) => {
 });
 
 // requested by index.html
-app.get('/build.js', (req, res) => {
+app.get('/bundle.js', (req, res) => {
   // if the browser accepts brotli-compressed files, send them
-  res.sendFile(join(__dirname, 'dist', 'build.js'));
+  res.sendFile(join(__dirname, '../', 'dist', 'bundle.js'));
 });
 
 app.use('/', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'));
+  res.sendFile(join(__dirname, '../', 'dist', 'index.html'));
 });
 
-app.listen(port, '192.168.3.0', (req, res) =>
-  console.log(`Listening on port ${port}`)
-);
+app.listen(port, (req, res) => console.log(`Listening on port ${port}`));
