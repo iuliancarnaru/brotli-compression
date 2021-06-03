@@ -48,4 +48,4 @@ app.use((req, res) => {
   res.sendFile(join(__dirname, '../', 'dist', 'index.html'));
 });
 
-app.listen(port, (req, res) => console.log(`Listening on port ${port}`));
+app.listen(port, '', (req, res) => console.log(`Listening on port ${port}`));
