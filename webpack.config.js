@@ -1,13 +1,14 @@
-const { join } = require('path');
+const path = require('path');
 const zlib = require('zlib');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-  entry: ['@babel/polyfill', join(__dirname, 'client/src', 'index.js')],
+  entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
   output: {
-    path: join(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -22,17 +23,22 @@ module.exports = {
         },
       },
       {
-        test: /\.styl$/,
+        test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 2,
+              sourceMap: true,
             },
           },
-          'stylus-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
         ],
       },
     ],
@@ -42,11 +48,6 @@ module.exports = {
       filename: '[path][base].gz',
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
-      compressionOptions: {
-        params: {
-          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-        },
-      },
       threshold: 10240,
       minRatio: 0.8,
     }),
@@ -64,5 +65,9 @@ module.exports = {
     }),
   ],
   devtool: 'eval-source-map',
-  // watch: true,
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 4000,
+  },
 };
