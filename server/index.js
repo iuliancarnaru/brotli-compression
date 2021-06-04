@@ -1,9 +1,9 @@
 const express = require('express');
 const { join } = require('path');
-const FindFiles = require('file-regex');
 const port = 3001;
 
 const app = express();
+app.use('/images', express.static('dist/images'));
 
 app.use(express.json());
 app.use(
