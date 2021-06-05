@@ -3,7 +3,6 @@ const { join } = require('path');
 const port = 3001;
 
 const app = express();
-app.use('/images', express.static('dist/images'));
 
 app.use(express.json());
 app.use(
@@ -11,6 +10,9 @@ app.use(
     extended: true,
   })
 );
+
+app.use('/styles', express.static('dist/styles'));
+app.use('/images', express.static('dist/images'));
 
 app.use('*', (req, res, next) => {
   //logger
@@ -25,7 +27,7 @@ app.use('*', (req, res, next) => {
 });
 
 // requested by index.html
-app.get(/^\/main\.([0-9a-z]*?)\.js$/, (req, res) => {
+app.get(/^\/main\.([0-9a-z]*?)\.js$/, (req, res, next) => {
   // if the browser accepts brotli-compressed files, send them
   const fileName = req.path.split('/')[1];
 
@@ -41,7 +43,7 @@ app.get(/^\/main\.([0-9a-z]*?)\.js$/, (req, res) => {
     res.sendFile(join(__dirname, '../', 'dist', `${fileName}.gz`));
   } else {
     console.log('using uncompressed file');
-    res.sendFile(join(__dirname, '../', 'dist', `${filename}`));
+    res.sendFile(join(__dirname, '../', 'dist', `${fileName}`));
   }
 });
 

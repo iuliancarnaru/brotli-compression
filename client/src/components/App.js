@@ -6,7 +6,7 @@ import './App.scss';
 const App = () => {
   return (
     <div>
-      <h1>Webpack 5</h1>
+      <h1>Webpack 5 learn</h1>
       <p>Image</p>
       <img src={webpackImage} alt="webpack-image" />
       <p>SVG</p>

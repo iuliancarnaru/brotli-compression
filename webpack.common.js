@@ -30,27 +30,6 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
-        exclude: /node_modules/,
-        use: [
-          // fallback to style-loader in development
-          'style-loader', // Inject styles into the DOM
-          {
-            loader: 'css-loader', // Turns css into commonjs
-            options: {
-              sourceMap: true,
-            },
-          },
-          'resolve-url-loader',
-          {
-            loader: 'sass-loader', // Turns sass into css
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
         test: /\.(png|jpg|gif)$/i,
         type: 'asset/resource',
       },
