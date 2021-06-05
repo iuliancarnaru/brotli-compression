@@ -1,6 +1,5 @@
 const path = require('path');
 const svgToMiniDataURI = require('mini-svg-data-uri');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src', 'index.js')],
@@ -45,11 +44,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './client/src/template.html',
-    }),
-  ],
   devtool: 'eval-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
